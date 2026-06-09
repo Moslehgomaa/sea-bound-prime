@@ -65,6 +65,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "Blue Ocean Marine" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Blue Ocean Marine Logistics — Global Freight Forwarding from Egypt" },
+      { name: "twitter:title", content: "Blue Ocean Marine Logistics — Global Freight Forwarding from Egypt" },
+      { property: "og:description", content: "Since 1984, Blue Ocean Marine has delivered ocean freight, shipping agency, customs clearance and inland logistics between Egypt and the world." },
+      { name: "twitter:description", content: "Since 1984, Blue Ocean Marine has delivered ocean freight, shipping agency, customs clearance and inland logistics between Egypt and the world." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6392d4d3-b602-4980-887d-dfba8ef4e457/id-preview-74198084--5a7709bc-ab67-482d-9027-cd0aa67d5154.lovable.app-1780991592662.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6392d4d3-b602-4980-887d-dfba8ef4e457/id-preview-74198084--5a7709bc-ab67-482d-9027-cd0aa67d5154.lovable.app-1780991592662.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
