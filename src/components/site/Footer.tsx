@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Anchor, Mail, Phone, MapPin, Linkedin, Facebook, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Facebook, Globe } from "lucide-react";
+import logoImg from "../assets/logo.png";
 
 export function Footer() {
   return (
@@ -7,9 +8,7 @@ export function Footer() {
       <div className="container-x grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10">
-              <Anchor className="h-5 w-5" />
-            </span>
+            <img src={logoImg} alt="Blue Ocean Marine" className="h-9 w-auto object-contain" />
             <span className="font-display text-lg font-bold">Blue Ocean Marine</span>
           </div>
           <p className="mt-4 max-w-xs text-sm text-primary-foreground/75">

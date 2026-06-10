@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, X, Anchor, Phone } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { useState } from "react";
+import logoImg from "../assets/logo.png";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -18,9 +19,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-md">
       <div className="container-x flex h-16 items-center justify-between md:h-20">
         <Link to="/" className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg gradient-navy text-primary-foreground">
-            <Anchor className="h-5 w-5" />
-          </span>
+          <img src={logoImg} alt="Blue Ocean Marine" className="h-9 w-auto object-contain" />
           <span className="flex flex-col leading-none">
             <span className="font-display text-base font-bold tracking-tight">Blue Ocean Marine</span>
             <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Logistics · Since 1984</span>
