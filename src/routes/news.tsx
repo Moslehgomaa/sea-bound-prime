@@ -15,9 +15,9 @@ export const Route = createFileRoute("/news")({
       { name: "description", content: "Industry insights, shipping guides and updates from Blue Ocean Marine Logistics — Egypt's trusted maritime logistics partner." },
       { property: "og:title", content: "News & Insights" },
       { property: "og:description", content: "Perspectives from the deck — maritime trends, compliance, and logistics know-how." },
-      { property: "og:url", content: "/news" },
+      { property: "og:url", content: "https://www.blueoceanmarine.com.eg/news" },
     ],
-    links: [{ rel: "canonical", href: "/news" }],
+    links: [{ rel: "canonical", href: "https://www.blueoceanmarine.com.eg/news" }],
   }),
   component: NewsPage,
 });

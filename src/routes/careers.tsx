@@ -9,9 +9,9 @@ export const Route = createFileRoute("/careers")({
       { name: "description", content: "Build your career in maritime logistics with a 40-year leader. Open roles in operations, sales, customs and digital." },
       { property: "og:title", content: "Careers at Blue Ocean Marine" },
       { property: "og:description", content: "Join a 40-year leader in maritime logistics." },
-      { property: "og:url", content: "/careers" },
+      { property: "og:url", content: "https://www.blueoceanmarine.com.eg/careers" },
     ],
-    links: [{ rel: "canonical", href: "/careers" }],
+    links: [{ rel: "canonical", href: "https://www.blueoceanmarine.com.eg/careers" }],
   }),
   component: CareersPage,
 });

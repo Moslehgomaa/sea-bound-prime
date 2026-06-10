@@ -10,9 +10,9 @@ export const Route = createFileRoute("/industries")({
       { name: "description", content: "Specialized maritime logistics for manufacturing, agriculture, pharma, automotive, retail, technology, construction, and energy sectors." },
       { property: "og:title", content: "Industries We Serve" },
       { property: "og:description", content: "Sector know-how that moves your market." },
-      { property: "og:url", content: "/industries" },
+      { property: "og:url", content: "https://www.blueoceanmarine.com.eg/industries" },
     ],
-    links: [{ rel: "canonical", href: "/industries" }],
+    links: [{ rel: "canonical", href: "https://www.blueoceanmarine.com.eg/industries" }],
   }),
   component: IndustriesPage,
 });
