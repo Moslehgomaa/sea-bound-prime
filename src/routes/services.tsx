@@ -3,6 +3,8 @@ import { PageHero, SectionHeading } from "@/components/site/Section";
 import { services } from "@/lib/site-data";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
+const SITE = "https://www.blueoceanmarine.com.eg";
+
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
@@ -10,9 +12,21 @@ export const Route = createFileRoute("/services")({
       { name: "description", content: "Ocean freight, shipping agency, customs clearance, inland haulage, project cargo, reefer, warehousing and digital logistics solutions." },
       { property: "og:title", content: "Maritime Logistics Services" },
       { property: "og:description", content: "End-to-end freight forwarding and supply-chain solutions from Egypt." },
-      { property: "og:url", content: "/services" },
+      { property: "og:url", content: `${SITE}/services` },
+      { property: "og:image", content: `${SITE}/og-image.jpg` },
     ],
-    links: [{ rel: "canonical", href: "/services" }],
+    links: [{ rel: "canonical", href: `${SITE}/services` }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE}/` },
+          { "@type": "ListItem", position: 2, name: "Services", item: `${SITE}/services` },
+        ],
+      }),
+    }],
   }),
   component: ServicesPage,
 });

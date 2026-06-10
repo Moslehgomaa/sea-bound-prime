@@ -2,9 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ShieldCheck, Clock, Globe2, Award, CheckCircle2, MapPin, Phone, Mail, Quote } from "lucide-react";
 import heroShip from "@/assets/hero-ship.jpg";
 import portNetwork from "@/assets/port-network.jpg";
-import { services, industries, stats, testimonials, news, certifications } from "@/lib/site-data";
+import { services, industries, stats, testimonials, news, certifications, carrierPartners, trustBadges } from "@/lib/site-data";
 import { SectionHeading, SectionLabel } from "@/components/site/Section";
 import { Counter } from "@/components/site/Counter";
+
+const SITE = "https://www.blueoceanmarine.com.eg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -13,9 +15,42 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Ocean freight, shipping agency, customs clearance and inland haulage from Egypt to the world. Trusted maritime logistics partner since 1984." },
       { property: "og:title", content: "Blue Ocean Marine — Maritime Logistics Since 1984" },
       { property: "og:description", content: "Reliable global freight solutions tailored to move your business forward." },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: `${SITE}/` },
+      { property: "og:image", content: `${SITE}/og-image.jpg` },
+      { name: "twitter:image", content: `${SITE}/og-image.jpg` },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: `${SITE}/` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": ["Organization", "LocalBusiness"],
+          name: "Blue Ocean Marine Logistics",
+          legalName: "Blue Ocean Marine Logistics",
+          foundingDate: "1984",
+          url: SITE,
+          logo: `${SITE}/og-image.jpg`,
+          image: `${SITE}/og-image.jpg`,
+          email: "info@blueoceanmarine.com.eg",
+          telephone: "+20-106-261-4443",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Alexandria",
+            addressCountry: "EG",
+          },
+          areaServed: { "@type": "Place", name: "Worldwide" },
+          sameAs: [
+            "https://www.linkedin.com/company/blue-ocean-marine",
+            "https://www.facebook.com/blueoceanmarine",
+          ],
+          contactPoint: [
+            { "@type": "ContactPoint", telephone: "+20-120-011-2284", contactType: "sales", areaServed: "Worldwide", availableLanguage: ["en", "ar"] },
+            { "@type": "ContactPoint", telephone: "+20-106-261-4443", contactType: "customer service", availableLanguage: ["en", "ar"] },
+          ],
+        }),
+      },
+    ],
   }),
   component: HomePage,
 });
@@ -25,7 +60,7 @@ function HomePage() {
     <>
       {/* HERO */}
       <section className="relative overflow-hidden bg-navy-deep text-primary-foreground">
-        <img src={heroShip} alt="Container vessel at sea" width={1920} height={1080} className="absolute inset-0 h-full w-full object-cover opacity-50" />
+        <img src={heroShip} alt="Large container vessel navigating open ocean" width={1920} height={1080} className="absolute inset-0 h-full w-full object-cover opacity-50" />
         <div className="absolute inset-0 bg-gradient-to-br from-navy-deep via-navy-deep/85 to-navy-deep/40" />
         <div className="container-x relative py-24 md:py-36 lg:py-44">
           <SectionLabel>Trusted since 1984</SectionLabel>
@@ -43,6 +78,9 @@ function HomePage() {
               Explore Services
             </Link>
           </div>
+          <p className="mt-4 text-xs text-primary-foreground/70">
+            No commitment · Response within 24 hours · Real expert, not a chatbot
+          </p>
 
           {/* Mini stats bar */}
           <div className="mt-16 grid max-w-3xl grid-cols-2 gap-6 border-t border-white/15 pt-8 md:grid-cols-4">
@@ -91,7 +129,7 @@ function HomePage() {
               <img src={portNetwork} alt="Global port operations at night" loading="lazy" width={1600} height={2000} className="h-full w-full object-cover" />
             </div>
             <div className="absolute -bottom-6 -left-6 hidden rounded-xl bg-card p-5 shadow-card md:block">
-              <div className="text-3xl font-bold text-navy"><Counter to={40} suffix="+" /></div>
+              <div className="text-3xl font-bold text-navy"><Counter to={42} suffix="+" /></div>
               <div className="text-sm text-muted-foreground">Years guiding cargo across the globe</div>
             </div>
           </div>
@@ -104,7 +142,7 @@ function HomePage() {
           <SectionHeading align="center" eyebrow="Why choose us" title="Built on trust. Run on precision." subtitle="Global reach with a dedicated local team that owns every shipment from booking to delivery." />
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { icon: ShieldCheck, title: "Trusted Partner", desc: "40+ years of reputation among carriers, ports and customs authorities." },
+              { icon: ShieldCheck, title: "Trusted Partner", desc: "42+ years of reputation among carriers, ports and customs authorities." },
               { icon: Globe2, title: "Global Network", desc: "Agents in 120+ countries through FIATA and WCA partnerships." },
               { icon: Clock, title: "Always On", desc: "24/7 operations and emergency desk — your cargo never sleeps." },
               { icon: Award, title: "Certified Excellence", desc: "ISO 9001, IATA, IMDG and AEO compliance you can rely on." },
@@ -116,6 +154,11 @@ function HomePage() {
                 <h3 className="mt-5 text-lg font-semibold">{f.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
               </div>
+            ))}
+          </div>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
+            {trustBadges.map((b) => (
+              <span key={b} className="rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-semibold text-foreground/80 shadow-sm">{b}</span>
             ))}
           </div>
         </div>
@@ -137,6 +180,7 @@ function HomePage() {
               <p className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">{s.short}</p>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
               <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-ocean transition group-hover:gap-3">Learn more <ArrowRight className="h-4 w-4" /></span>
+              <span className="mt-3 block text-xs text-muted-foreground">Questions about {s.title}? <Link to="/contact" className="font-semibold text-ocean">Talk to a specialist →</Link></span>
             </Link>
           ))}
         </div>
@@ -182,6 +226,18 @@ function HomePage() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* CARRIER PARTNERS */}
+      <section className="container-x py-20 md:py-24">
+        <SectionHeading align="center" eyebrow="Carrier Partners" title="Working with the world's leading ocean carriers." subtitle="Contracted space and competitive rates across every major shipping line." />
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
+          {carrierPartners.map((p) => (
+            <span key={p} className="rounded-full bg-muted px-5 py-2.5 text-sm font-semibold text-foreground/75 transition hover:bg-foam">
+              {p}
+            </span>
+          ))}
         </div>
       </section>
 
@@ -237,6 +293,7 @@ function HomePage() {
             <div className="flex flex-col gap-3 lg:items-end">
               <Link to="/quote" className="inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-3.5 text-sm font-semibold text-navy-deep hover:bg-foam">Request a Quote <ArrowRight className="h-4 w-4" /></Link>
               <Link to="/contact" className="inline-flex items-center justify-center gap-2 rounded-md border border-white/30 bg-white/5 px-6 py-3.5 text-sm font-semibold backdrop-blur hover:bg-white/10">Talk to an expert</Link>
+              <p className="text-xs text-primary-foreground/70 lg:text-right">No commitment · Response within 24 hours · Real expert, not a chatbot</p>
             </div>
           </div>
         </div>

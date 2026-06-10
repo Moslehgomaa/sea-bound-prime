@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/Section";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, CheckCircle2, Loader2, AlertCircle, X } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
+
+const SITE = "https://www.blueoceanmarine.com.eg";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -11,9 +13,21 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "Reach our team in Alexandria, Egypt. Sales, customer service, shipping agency and 24/7 emergency lines." },
       { property: "og:title", content: "Contact Blue Ocean Marine" },
       { property: "og:description", content: "Talk to a logistics expert in Alexandria, Egypt." },
-      { property: "og:url", content: "/contact" },
+      { property: "og:url", content: `${SITE}/contact` },
+      { property: "og:image", content: `${SITE}/og-image.jpg` },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: `${SITE}/contact` }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE}/` },
+          { "@type": "ListItem", position: 2, name: "Contact", item: `${SITE}/contact` },
+        ],
+      }),
+    }],
   }),
   component: ContactPage,
 });
@@ -32,10 +46,14 @@ const offices = [
 ];
 
 function ContactPage() {
-  const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [errs, setErrs] = useState<Record<string, string>>({});
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage(null);
     const data = Object.fromEntries(new FormData(e.currentTarget));
     const r = schema.safeParse(data);
     if (!r.success) {
@@ -45,8 +63,18 @@ function ContactPage() {
       return;
     }
     setErrs({});
-    setSent(true);
+    setIsSubmitting(true);
+    try {
+      await new Promise((res) => setTimeout(res, 900));
+      setIsSuccess(true);
+    } catch {
+      setErrorMessage("Something went wrong. Please try again or email us directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const reset = () => { setIsSuccess(false); setErrs({}); setErrorMessage(null); };
 
   return (
     <>
@@ -61,18 +89,41 @@ function ContactPage() {
           <div>
             <h2 className="text-2xl font-bold">Send us a message</h2>
             <p className="mt-2 text-muted-foreground">We typically respond within a few business hours.</p>
-            <form onSubmit={onSubmit} className="mt-8 grid gap-5 sm:grid-cols-2" noValidate>
-              {sent && <p className="sm:col-span-2 rounded-lg bg-ocean/10 px-4 py-3 text-sm text-ocean">Thanks — your message has been received.</p>}
-              <Input name="name" label="Full name" error={errs.name} />
-              <Input name="email" type="email" label="Email" error={errs.email} />
-              <Input name="subject" label="Subject" full error={errs.subject} />
-              <div className="sm:col-span-2">
-                <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
-                <textarea name="message" rows={6} className="mt-1.5 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm" />
-                {errs.message && <p className="mt-1 text-xs text-destructive">{errs.message}</p>}
+
+            {isSuccess ? (
+              <div className="mt-8 flex flex-col items-center rounded-2xl border border-border bg-card p-10 text-center shadow-card">
+                <CheckCircle2 className="h-14 w-14 text-green-600" />
+                <h3 className="mt-5 text-xl font-bold">Message sent</h3>
+                <p className="mt-2 max-w-md text-muted-foreground">Thanks for reaching out — we'll get back to you shortly.</p>
+                <button onClick={reset} className="mt-6 rounded-md border border-input px-5 py-2.5 text-sm font-semibold">Send another message</button>
               </div>
-              <button type="submit" className="sm:col-span-2 rounded-lg gradient-navy px-6 py-3.5 text-sm font-semibold text-primary-foreground">Send message</button>
-            </form>
+            ) : (
+              <form onSubmit={onSubmit} className="mt-8 grid gap-5 sm:grid-cols-2" noValidate>
+                {errorMessage && (
+                  <div className="sm:col-span-2 flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                    <span className="flex-1">{errorMessage}</span>
+                    <button type="button" onClick={() => setErrorMessage(null)} aria-label="Dismiss error"><X className="h-4 w-4" /></button>
+                  </div>
+                )}
+                <Input name="name" label="Full name" autoComplete="name" error={errs.name} />
+                <Input name="email" type="email" label="Email" autoComplete="email" inputMode="email" error={errs.email} />
+                <Input name="subject" label="Subject" full error={errs.subject} />
+                <div className="sm:col-span-2">
+                  <label htmlFor="message" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Message</label>
+                  <textarea id="message" name="message" rows={6} className="mt-1.5 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm" />
+                  {errs.message && <p className="mt-1 text-xs text-destructive">{errs.message}</p>}
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="sm:col-span-2 flex items-center justify-center gap-2 rounded-lg gradient-navy px-6 py-3.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-60"
+                >
+                  {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
+                  {isSubmitting ? "Sending..." : "Send message"}
+                </button>
+              </form>
+            )}
           </div>
 
           <div className="space-y-5">
@@ -110,11 +161,24 @@ function ContactPage() {
   );
 }
 
-function Input({ name, label, type = "text", full, error }: { name: string; label: string; type?: string; full?: boolean; error?: string }) {
+function Input({
+  name, label, type = "text", full, error, autoComplete, inputMode,
+}: {
+  name: string; label: string; type?: string; full?: boolean; error?: string;
+  autoComplete?: string; inputMode?: "text" | "email" | "tel" | "url" | "numeric" | "decimal" | "search" | "none";
+}) {
+  const id = `c-${name}`;
   return (
     <div className={full ? "sm:col-span-2" : ""}>
-      <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</label>
-      <input name={name} type={type} className="mt-1.5 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20" />
+      <label htmlFor={id} className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</label>
+      <input
+        id={id}
+        name={name}
+        type={type}
+        autoComplete={autoComplete}
+        inputMode={inputMode}
+        className="mt-1.5 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-ocean focus:outline-none focus:ring-2 focus:ring-ocean/20"
+      />
       {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
     </div>
   );
