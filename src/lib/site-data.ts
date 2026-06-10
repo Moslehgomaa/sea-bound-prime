@@ -79,11 +79,17 @@ export const industries = [
 ] as const;
 
 export const stats = [
-  { value: 40, suffix: "+", label: "Years in business" },
-  { value: 120, suffix: "+", label: "Countries served" },
-  { value: 50, suffix: "K+", label: "Shipments handled" },
-  { value: 24, suffix: "/7", label: "Operations control" },
+  { value: "42", suffix: "+", label: "Years in business" },
+  { value: "120", suffix: "+", label: "Countries served" },
+  { value: "50", suffix: "K+", label: "Shipments handled" },
+  { value: "97", suffix: "%", label: "On-time performance" },
 ] as const;
+
+export const carrierPartners = [
+  "CMA CGM", "MSC", "Hapag-Lloyd", "Evergreen", "COSCO", "ONE", "Maersk", "Yang Ming",
+] as const;
+
+export const trustBadges = ["ISO 9001:2015", "FIATA Member", "42 Years", "AEO Compliant"] as const;
 
 export const testimonials = [
   { quote: "Blue Ocean Marine has been our trusted forwarder out of Alexandria for over a decade. Their reefer desk is best-in-class.", name: "Hassan A.", role: "Head of Supply Chain, Agri Exporter" },

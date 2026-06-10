@@ -4,6 +4,8 @@ import { Counter } from "@/components/site/Counter";
 import { Target, Compass, Heart, Award, CheckCircle2 } from "lucide-react";
 import aboutImg from "@/assets/about-ocean.jpg";
 
+const SITE = "https://www.blueoceanmarine.com.eg";
+
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
@@ -11,9 +13,21 @@ export const Route = createFileRoute("/about")({
       { name: "description", content: "Since 1984, Blue Ocean Marine has connected Egypt to the world with trusted maritime logistics. Learn about our story, mission, and leadership." },
       { property: "og:title", content: "About Blue Ocean Marine" },
       { property: "og:description", content: "Four decades of maritime expertise from Alexandria, Egypt." },
-      { property: "og:url", content: "/about" },
+      { property: "og:url", content: `${SITE}/about` },
+      { property: "og:image", content: `${SITE}/og-image.jpg` },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
+    links: [{ rel: "canonical", href: `${SITE}/about` }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE}/` },
+          { "@type": "ListItem", position: 2, name: "About", item: `${SITE}/about` },
+        ],
+      }),
+    }],
   }),
   component: AboutPage,
 });

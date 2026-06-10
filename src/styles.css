@@ -150,3 +150,9 @@
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
   &:hover { transform: translateY(-4px); box-shadow: var(--shadow-elevated); }
 }
+
+@keyframes wa-pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  70% { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
