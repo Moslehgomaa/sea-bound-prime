@@ -13,6 +13,11 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "../components/site/Header";
 import { Footer } from "../components/site/Footer";
+import { WhatsAppButton } from "../components/site/WhatsAppButton";
+import logoImg from "../assets/logo.png";
+
+const SITE = "https://www.blueoceanmarine.com.eg";
+const OG_IMAGE = "https://www.blueoceanmarine.com.eg/og-image.jpg";
 
 function NotFoundComponent() {
   return (
@@ -62,40 +67,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Blue Ocean Marine Logistics — Global Freight Forwarding from Egypt" },
       { name: "description", content: "Since 1984, Blue Ocean Marine has delivered ocean freight, shipping agency, customs clearance and inland logistics between Egypt and the world." },
       { name: "author", content: "Blue Ocean Marine Logistics" },
-      { property: "og:site_name", content: "Blue Ocean Marine" },
+      { property: "og:site_name", content: "Blue Ocean Marine Logistics" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:title", content: "Blue Ocean Marine Logistics — Global Freight Forwarding from Egypt" },
       { name: "twitter:title", content: "Blue Ocean Marine Logistics — Global Freight Forwarding from Egypt" },
       { property: "og:description", content: "Since 1984, Blue Ocean Marine has delivered ocean freight, shipping agency, customs clearance and inland logistics between Egypt and the world." },
       { name: "twitter:description", content: "Since 1984, Blue Ocean Marine has delivered ocean freight, shipping agency, customs clearance and inland logistics between Egypt and the world." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6392d4d3-b602-4980-887d-dfba8ef4e457/id-preview-74198084--5a7709bc-ab67-482d-9027-cd0aa67d5154.lovable.app-1780991592662.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6392d4d3-b602-4980-887d-dfba8ef4e457/id-preview-74198084--5a7709bc-ab67-482d-9027-cd0aa67d5154.lovable.app-1780991592662.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/png", href: logoImg },
+      { rel: "apple-touch-icon", href: logoImg },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" },
     ],
-    scripts: [{
-      type: "application/ld+json",
-      children: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        name: "Blue Ocean Marine Logistics",
-        foundingDate: "1984",
-        url: "/",
-        address: { "@type": "PostalAddress", addressLocality: "Alexandria", addressCountry: "EG" },
-        contactPoint: [{ "@type": "ContactPoint", telephone: "+20-120-011-2284", contactType: "customer service" }],
-      }),
-    }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
+
+export { SITE, OG_IMAGE };
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
@@ -110,12 +105,19 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-md focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-background"
+      >
+        Skip to content
+      </a>
       <div className="flex min-h-screen flex-col">
         <Header />
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
           <Outlet />
         </main>
         <Footer />
+        <WhatsAppButton />
       </div>
     </QueryClientProvider>
   );
