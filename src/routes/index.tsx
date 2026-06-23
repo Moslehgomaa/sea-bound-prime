@@ -172,16 +172,18 @@ function HomePage() {
         </div>
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {services.slice(0, 6).map((s) => (
-            <Link key={s.slug} to="/services" className="group hover-lift relative overflow-hidden rounded-2xl border border-border bg-card p-7">
+            <article key={s.slug} className="group hover-lift relative overflow-hidden rounded-2xl border border-border bg-card p-7">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-ocean/10 text-ocean">
                 <s.icon className="h-6 w-6" />
               </div>
               <h3 className="mt-5 text-lg font-semibold">{s.title}</h3>
               <p className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">{s.short}</p>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
-              <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-ocean transition group-hover:gap-3">Learn more <ArrowRight className="h-4 w-4" /></span>
+              <Link to="/services" hash={s.slug} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-ocean transition hover:gap-3">
+                Learn more <ArrowRight className="h-4 w-4" />
+              </Link>
               <span className="mt-3 block text-xs text-muted-foreground">Questions about {s.title}? <Link to="/contact" className="font-semibold text-ocean">Talk to a specialist →</Link></span>
-            </Link>
+            </article>
           ))}
         </div>
       </section>
