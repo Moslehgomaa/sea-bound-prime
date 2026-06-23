@@ -90,8 +90,7 @@ export function Header() {
         </button>
       </div>
 
-      {open && (
-        <div id="mobile-nav" className="border-t border-border lg:hidden">
+      <div id="mobile-nav" hidden={!open} className="border-t border-border lg:hidden">
           <nav className="container-x flex flex-col py-3" aria-label="Mobile">
             {nav.map((n) => {
               const active = isActive(n.to);
@@ -114,7 +113,6 @@ export function Header() {
             </Link>
           </nav>
         </div>
-      )}
     </header>
   );
 }
